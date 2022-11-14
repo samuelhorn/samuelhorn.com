@@ -83,6 +83,7 @@ import Github from "~/assets/svg/Github.svg";
 import Instagram from "~/assets/svg/Instagram.svg";
 import LinkedIn from "~/assets/svg/LinkedIn.svg";
 import Twitter from "~/assets/svg/Twitter.svg";
+import Mastodon from "~/assets/svg/Mastodon.svg";
 
 export default {
   components: {
@@ -92,6 +93,7 @@ export default {
     Instagram,
     LinkedIn,
     Twitter,
+    Mastodon,
   },
 };
 </script>
