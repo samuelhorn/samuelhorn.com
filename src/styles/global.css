@@ -28,7 +28,7 @@ body {
 
 h1 {
   @apply font-headings text-text leading-none mb-10;
-  font-size: clamp(22px, calc(3rem + 2vw), 78px);
+  font-size: clamp(22px, calc(2rem + 3vw), 78px);
 
   &.blog-heading {
     font-size: clamp(22px, calc(2rem + 2vw), 62px);
