@@ -1,7 +1,5 @@
 ---
-interface Props {
-  closeOnClick?: boolean;
-}
+
 ---
 
 <div>
@@ -35,10 +33,6 @@ interface Props {
 
     const menuButton = document.getElementById("menuButton");
     menuButton && menuButton.addEventListener("click", toggleMobileNav);
-
-    if (closeOnClick) {
-      handleCloseOnClick();
-    }
   }
 
   function toggleMobileNav() {
