@@ -7,10 +7,10 @@ export async function GET(context) {
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    site: context.site,
+    site: "https://samuelhorn.com",
     items: posts.map((post) => ({
       ...post.data,
-      link: `/blog/${post.id}/`,
+      link: `/posts/${post.data.properties.slug}/`,
     })),
   });
 }
