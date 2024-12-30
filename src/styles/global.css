@@ -69,17 +69,13 @@ h1 {
     button {
       @apply m-0 border-8 border-border aspect-[16/9] w-full relative overflow-hidden rounded-xl cursor-pointer after:content-["►"] after:text-7xl after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-white before:absolute before:inset-0 before:bg-black/10;
     }
-
-    iframe {
-      @apply relative z-10;
-    }
   }
 
   .notion-callout {
     @apply p-6 rounded-lg bg-background-alt;
 
-    p {
-      @apply text-base;
+    .notion-callout-content {
+      @apply mt-0;
     }
 
     h2,

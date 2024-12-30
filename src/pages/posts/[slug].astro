@@ -78,7 +78,9 @@ const { Content, headings } = await render(page);
 
     youtubeContainers.forEach((container) => {
       container.addEventListener("click", function () {
-        const videoId = container.getAttribute("data-video-id");
+        const videoId = container
+          .querySelector("button")
+          .getAttribute("data-video-id");
         if (!videoId) return;
 
         const iframe = document.createElement("iframe");
@@ -92,6 +94,10 @@ const { Content, headings } = await render(page);
           "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         );
         iframe.setAttribute("allowfullscreen", "true");
+        iframe.setAttribute(
+          "class",
+          "border-8 border-border aspect-[16/9] w-full relative overflow-hidden rounded-xl"
+        );
         iframe.style.width = "100%";
         iframe.style.height = "100%";
 
