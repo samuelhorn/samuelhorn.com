@@ -27,6 +27,8 @@ const customTransition = {
   forwards: pageTransition,
   backwards: pageTransition,
 };
+
+const { nav = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -38,10 +40,10 @@ const customTransition = {
     />
   </head>
   <body class="bg-background text-text">
-    <div class="relative z-10">
-      <Header />
-      <div transition:animate={customTransition}>
-        <slot />
+    <div class="relative z-10 flex flex-col min-h-[100dvh]">
+      <Header nav={nav} />
+      <div class="grow flex flex-col" transition:animate={customTransition}>
+        <div class="grow flex flex-col"><slot /></div>
         <Footer />
       </div>
     </div>
