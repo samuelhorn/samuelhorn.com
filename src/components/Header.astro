@@ -2,15 +2,18 @@
 import { SITE_TITLE } from "../consts";
 import ThemeIcon from "./ThemeIcon.astro";
 import Logo from "./Logo.astro";
-import Navigation from "./Navigation.astro";
+import MenuItems from "./MenuItems.astro";
 import SocialLinks from "./SocialLinks.astro";
-
-const { nav = true } = Astro.props;
+import Menu from "./Menu.astro";
+import MenuButton from "./MenuButton.astro";
 ---
 
 <header>
-  <nav class="flex items-center container justify-between mt-14 mb-14 relative">
-    {nav ? <Navigation /> : <div />}
+  <nav class="flex items-center relative container justify-between mt-14 mb-14">
+    <Menu>
+      <MenuButton class="md:hidden" />
+      <MenuItems class="hidden md:flex" />
+    </Menu>
     <a
       href="/"
       aria-label={SITE_TITLE}
@@ -18,6 +21,7 @@ const { nav = true } = Astro.props;
     >
       <Logo />
     </a>
+
     <div class="flex items-center gap-6">
       <SocialLinks size="20" class="hidden md:flex" />
       <ThemeIcon />

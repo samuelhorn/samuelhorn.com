@@ -8,27 +8,98 @@ interface Props {
 const { headings } = Astro.props;
 ---
 
-<aside id="toc" class="min-w-[180px] max-w-[260px]">
-  <div class="sticky top-10 pt-2">
-    <h2 class="font-headings text-xl">Table of Contents</h2>
-    <ol class="mt-4">
-      {
-        headings.map((heading) => {
-          return (
-            <li
-              class:list={[
-                "mt-2 font-medium border-border",
-                { "text-base border-t pt-2": heading.depth === 0 },
-                { "ml-4 text-sm": heading.depth === 1 },
-              ]}
-            >
-              <a class="opacity-50" href={`#${heading.slug}`}>
-                {heading.text}
-              </a>
-            </li>
-          );
-        })
-      }
-    </ol>
+<aside
+  id="toc"
+  class="px-4 bg-background lg:px-0 lg:bg-none border lg:border-none rounded-lg shadow-xl lg:shadow-none border-border lg:sticky top-2 lg:top-10 w-full max-w-[700px] lg:max-w-[260px] order-1 lg:order-2"
+>
+  <div class="py-2">
+    <h2 class="font-headings text-xl">
+      <button
+        class="w-full text-left"
+        type="button"
+        id="Table of Contents button"
+        aria-expanded="false"
+        aria-controls="Table of Contents list"
+      >
+        Table of Contents
+      </button>
+    </h2>
+
+    <div
+      id="Table of Contents list"
+      aria-labelledby="Table of Contents button"
+      class="hidden max-h-0 overflow-hidden transition-all duration-300 ease-in-out lg:block lg:max-h-none"
+    >
+      <div class="transition-[height]">
+        <ol>
+          {
+            headings.map((heading) => {
+              return (
+                <li
+                  class:list={[
+                    "mt-2 font-medium border-border",
+                    { "text-base border-t pt-2": heading.depth === 0 },
+                    { "ml-4 text-sm": heading.depth === 1 },
+                  ]}
+                >
+                  <a class="opacity-50" href={`#${heading.slug}`}>
+                    {heading.text}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </div>
+    </div>
   </div>
 </aside>
+
+<script>
+  function accordionSetup() {
+    const accordionButton = document.getElementById(
+      "Table of Contents button"
+    ) as HTMLElement;
+    const accordionContent = document.getElementById(
+      "Table of Contents list"
+    ) as HTMLElement;
+
+    if (accordionButton && accordionContent) {
+      accordionButton.addEventListener("click", (event) => {
+        const isExpanded =
+          accordionButton.getAttribute("aria-expanded") === "true";
+
+        if (!isExpanded) {
+          // if accordion is currently closed, so open it
+          accordionButton.setAttribute("aria-expanded", "true");
+
+          accordionContent.classList.remove("hidden");
+          accordionContent.style.maxHeight =
+            accordionContent.scrollHeight + "px";
+        } else {
+          accordionButton.setAttribute("aria-expanded", "false");
+          accordionContent.style.maxHeight = "0px";
+
+          setTimeout(() => {
+            accordionContent.classList.add("hidden");
+          }, 300);
+        }
+        event.preventDefault();
+        return false;
+      });
+    }
+  }
+
+  accordionSetup();
+
+  document.addEventListener("astro:after-swap", accordionSetup);
+</script>
+
+<style>
+  @media (min-width: 1024px) {
+    #Table of Contents list {
+      display: block !important;
+      max-height: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,49 @@
+---
+interface Props {
+  closeOnClick?: boolean;
+}
+---
+
+<div>
+  <div id="navigation">
+    <slot />
+  </div>
+</div>
+
+<script is:inline>
+  ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+    document.addEventListener(event, addListeners);
+  });
+
+  function cloneAndReplace(element) {
+    const clone = element.cloneNode(true);
+    element.parentNode.replaceChild(clone, element);
+  }
+
+  function addListeners() {
+    const oldMenuButton = document.getElementById("menuButton");
+
+    if (oldMenuButton) {
+      cloneAndReplace(oldMenuButton);
+    }
+
+    const isHome = window.location.pathname === "/";
+
+    if (isHome) {
+      document.querySelector("#navigation").classList.add("hidden");
+    }
+
+    const menuButton = document.getElementById("menuButton");
+    menuButton && menuButton.addEventListener("click", toggleMobileNav);
+
+    if (closeOnClick) {
+      handleCloseOnClick();
+    }
+  }
+
+  function toggleMobileNav() {
+    [...document.querySelectorAll(".nav-toggle")].forEach((el) => {
+      el.classList.toggle("hidden");
+    });
+  }
+</script>

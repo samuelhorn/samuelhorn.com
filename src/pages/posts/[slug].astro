@@ -37,12 +37,14 @@ const { Content, headings } = await render(page);
             alt=""
             widths={[200, 400, 600, 1000, 1400]}
             sizes="100vw"
-            class="rounded-2xl aspect-[2/1] lg:aspect-[3/1] object-cover mb-8 lg:mb-14 border-8 border-border"
+            class="rounded-2xl aspect-[16/9] w-full max-w-[1008px] mx-auto object-cover mb-8 lg:mb-14 border-8 border-border"
           />
         )
       }
-      <div class="md:flex gap-12 justify-center">
-        <div class="max-w-[700px]">
+      <div
+        class="flex flex-col lg:flex-row gap-12 items-center justify-center lg:items-start"
+      >
+        <div class="max-w-[700px] w-full order-2 lg:order-1">
           <h1 class="blog-heading mb-8">
             {page.data.properties.Name}
           </h1>

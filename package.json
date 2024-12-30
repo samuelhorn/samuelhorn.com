@@ -20,6 +20,7 @@
     "@hbsnow/rehype-sectionize": "^1.0.7",
     "@shikijs/rehype": "^1.24.4",
     "astro": "^5.1.0",
+    "astro-navbar": "^2.3.9",
     "module-alias": "^2.2.3",
     "motion": "^11.15.0",
     "notion-astro-loader": "^0.4.0",

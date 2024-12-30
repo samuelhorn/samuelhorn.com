@@ -1,8 +1,21 @@
 ---
 import Link from "./NavigationLink.astro";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className, ...rest } = Astro.props;
 ---
 
-<div id="navLinks" class="relative flex gap-4 font-bold navin">
+<nav
+  class:list={[
+    "absolute border border-border flex flex-col z-10 p-6 rounded-lg min-w-52 shadow-2xl top-8 left-6 bg-background gap-4 font-bold nav-toggle md:relative md:left-auto md:top-auto md:flex-row md:p-0 md:border-none md:bg-none",
+    className,
+  ]}
+  {...rest}
+  id="navLinks"
+>
   <Link href="/">Home</Link>
   <Link href="/posts">Journal</Link>
   <Link href="/about">About</Link>
@@ -11,13 +24,17 @@ import Link from "./NavigationLink.astro";
     transition:persist
   >
   </div>
-</div>
+</nav>
 
 <script>
   import { animate } from "motion";
 
-  function updateIndicator() {
+  const updateIndicator = () => {
     const element = document.querySelector("a.active")! as HTMLElement;
+
+    if (!element) {
+      return;
+    }
 
     const { offsetLeft, offsetWidth } = element;
 
@@ -41,7 +58,7 @@ import Link from "./NavigationLink.astro";
         damping: 30,
       }
     );
-  }
+  };
 
   document.addEventListener("astro:after-swap", updateIndicator);
 

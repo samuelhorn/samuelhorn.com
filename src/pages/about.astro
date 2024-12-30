@@ -16,8 +16,8 @@ import Sam from "../assets/sam.jpg";
         Hi, I’m Samuel Horn. Developer, Creator, and Productivity Enthusiast.
       </h1>
     </header>
-    <div class="md:flex gap-12 justify-center">
-      <div class="max-w-[700px]">
+    <div class="flex flex-col md:flex-row gap-12 justify-center">
+      <div class="max-w-[700px] order-2 md:order-1">
         <div class="post-content">
           <p>
             I’m Samuel Horn, a developer and creator passionate about making
@@ -50,17 +50,19 @@ import Sam from "../assets/sam.jpg";
           <p>
             If you’re ready to work smarter, build better, and stay inspired,
             explore my blog, check out my YouTube channel, or subscribe to my
-            newsletter. You can also connect with me on X, Bluesky, or LinkedIn.
-          </p>
-          <div>Subscription form</div>
-          <p>
-            When I’m not coding, you’ll find me exploring new productivity
-            tools, tweaking my Notion setup, or geeking out over the latest tech
-            gear.
+            newsletter. You can also connect with me on <a
+              href="https://x.com/samuelhorncom"
+              target="_blank">X</a
+            >, <a href="https://bsky.app/profile/samuelhorn.com" target="_blank"
+              >Bluesky</a
+            >, or <a
+              href="https://www.linkedin.com/in/samuelhorncom"
+              target="_blank">LinkedIn</a
+            >.
           </p>
         </div>
       </div>
-      <aside id="toc" class="min-w-[180px] max-w-[260px]">
+      <aside class="min-w-[180px] lg:max-w-[260px] order-1 md:order-2">
         <Image
           src={Sam}
           alt="Samuel Horn"
@@ -70,12 +72,3 @@ import Sam from "../assets/sam.jpg";
     </div>
   </main>
 </Layout>
-
-<!-- 
-Headline: "Hi, I’m Samuel Horn. Developer, Creator, and Productivity Enthusiast."
-Personal Intro: A few lines about who you are and what you do.
-Your Story: Briefly describe your journey and passions.
-What Visitors Can Expect: Highlight what content and value they’ll find on your site.
-Call to Action: Invite them to subscribe, explore, or connect with you.
-Fun Facts (Optional): Add a personal touch.
--->
