@@ -1,0 +1,20 @@
+---
+import { slugify } from "../pages/tags/[slug].astro";
+
+interface Props {
+  tag: string;
+  class?: string;
+}
+
+const { tag, class: className } = Astro.props;
+---
+
+<a
+  href={`/tags/${slugify(tag)}`}
+  class:list={[
+    "inline-block bg-background-alt hover:bg-border transition-colors text-[#8E5CF7] border-2 border-border text-sm font-headings rounded-lg px-3 leading-none py-1.5",
+    className,
+  ]}
+>
+  {tag}
+</a>

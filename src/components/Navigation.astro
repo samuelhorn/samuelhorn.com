@@ -1,0 +1,49 @@
+---
+import Link from "./NavigationLink.astro";
+---
+
+<div id="navLinks" class="relative flex gap-4 font-bold navin">
+  <Link href="/">Home</Link>
+  <Link href="/posts">Journal</Link>
+  <Link href="/about">About</Link>
+  <div
+    class="indicator h-0.5 bg-[#8E5CF7] absolute -bottom-2"
+    transition:persist
+  >
+  </div>
+</div>
+
+<script>
+  import { animate } from "motion";
+
+  function updateIndicator() {
+    const element = document.querySelector("a.active")! as HTMLElement;
+
+    const { offsetLeft, offsetWidth } = element;
+
+    document.querySelectorAll("#navLinks a").forEach((link) => {
+      if (link !== element) {
+        link.classList.remove("opacity-50");
+      }
+    });
+
+    element.classList.add("opacity-50");
+
+    animate(
+      ".indicator",
+      {
+        left: offsetLeft,
+        width: offsetWidth,
+      },
+      {
+        type: "spring",
+        stiffness: 500,
+        damping: 30,
+      }
+    );
+  }
+
+  document.addEventListener("astro:after-swap", updateIndicator);
+
+  updateIndicator();
+</script>

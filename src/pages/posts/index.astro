@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/BaseLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+
+const posts = await getCollection("blog");
+
+posts.sort((a, b) => {
+  if (
+    !a.data.properties.created?.created_time ||
+    !b.data.properties.created?.created_time
+  ) {
+    return 0;
+  }
+
+  return (
+    new Date(b.data.properties.created.created_time).getTime() -
+    new Date(a.data.properties.created.created_time).getTime()
+  );
+});
+---
+
+<Layout>
+  <main class="container pt-14">
+    <div class="max-w-[1008px] mx-auto">
+      <h1>Journal</h1>
+      <div class="grid grid-cols-2 gap-6">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    </div>
+  </main>
+</Layout>

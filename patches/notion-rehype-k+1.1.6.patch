@@ -1,0 +1,43 @@
+diff --git a/node_modules/notion-rehype-k/dist/handlers/callout.js b/node_modules/notion-rehype-k/dist/handlers/callout.js
+index 33d0c84..7ee8cee 100644
+--- a/node_modules/notion-rehype-k/dist/handlers/callout.js
++++ b/node_modules/notion-rehype-k/dist/handlers/callout.js
+@@ -6,12 +6,13 @@ const handler = (context, block) => {
+     const data = block[BlockType.callout];
+     const blockClass = notionPrefixFactory(context)(BlockType.callout);
+     const calloutIcon = h('div', { className: [`${blockClass}-icon`] }, []);
+-    if (data.icon.type === 'emoji') {
+-        calloutIcon.children.push(h('text', data.icon.emoji));
+-    }
+-    else {
+-        const { url, attr: fileAttr } = getNotionFileUrlAndAttr(context, data.icon);
+-        calloutIcon.children.push(h('img', { src: url, ...fileAttr }, []));
++    if (data.icon) {
++        if (data.icon.type === 'emoji') {
++            calloutIcon.children.push(h('text', data.icon.emoji));
++        } else {
++            const { url, attr: fileAttr } = getNotionFileUrlAndAttr(context, data.icon);
++            calloutIcon.children.push(h('img', { src: url, ...fileAttr }, []));
++        }
+     }
+     const calloutContent = h('div', { className: [`${blockClass}-content`] }, []);
+     addTasksToAddDirectChildren(context, calloutContent, data.children);
+diff --git a/node_modules/notion-rehype-k/dist/handlers/video.js b/node_modules/notion-rehype-k/dist/handlers/video.js
+index 35704a5..b1e6bd0 100644
+--- a/node_modules/notion-rehype-k/dist/handlers/video.js
++++ b/node_modules/notion-rehype-k/dist/handlers/video.js
+@@ -3,9 +3,12 @@ import { h, getNotionFileUrlAndAttr, notionPrefixFactory } from '../utils.js';
+ import { BlockType } from '../types.js';
+ const handler = (context, block) => {
+     const data = block[BlockType.video];
+-    const { url, attr: fileAttr } = getNotionFileUrlAndAttr(context, data);
++
++    const videoUrl = new URL(data.external.url);
++    const videoId = videoUrl.searchParams.get("v");
++    
+     const blockClass = notionPrefixFactory(context)(BlockType.video);
+-    const hast = h('div', { className: [blockClass] }, [h('video', { src: url, ...fileAttr }, [])]);
++    const hast = h('button', { className: [blockClass], dataVideoId: videoId, ariaLabel: "Play video" }, [h('img', { src: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` }, [])]);
+     addCaptionToHast(context, hast, data.caption);
+     return hast;
+ };

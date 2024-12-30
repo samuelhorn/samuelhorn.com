@@ -1,154 +1,188 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
-
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
-}
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-bold.woff') format('woff');
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
-body {
-	font-family: 'Atkinson', sans-serif;
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
-	font-size: 20px;
-	line-height: 1.7;
-}
-main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
-}
-h1 {
-	font-size: 3.052em;
-}
-h2 {
-	font-size: 2.441em;
-}
-h3 {
-	font-size: 1.953em;
-}
-h4 {
-	font-size: 1.563em;
-}
-h5 {
-	font-size: 1.25em;
-}
-strong,
-b {
-	font-weight: 700;
-}
-a {
-	color: var(--accent);
-}
-a:hover {
-	color: var(--accent);
-}
-p {
-	margin-bottom: 1em;
-}
-.prose p {
-	margin-bottom: 2em;
-}
-textarea {
-	width: 100%;
-	font-size: 16px;
-}
-input {
-	font-size: 16px;
-}
-table {
-	width: 100%;
-}
-img {
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
-code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
-}
-pre {
-	padding: 1.5em;
-	border-radius: 8px;
-}
-pre > code {
-	all: unset;
-}
-blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0px;
-	font-size: 1.333em;
-}
-hr {
-	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
+  --background: #fcf9f5;
+  --background-alt: #faf4ed;
+  --text: #333;
+  --text-muted: #666;
+  --border: #f8ede1;
 }
 
-.sr-only {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
-	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
-	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
-	white-space: nowrap;
+.dark {
+  --background: #131220;
+  --background-alt: #242137;
+  --text: #fff;
+  --text-muted: #ccc;
+  --border: #302c48;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-y: scroll;
+}
+
+.container {
+  @apply w-full max-w-full xl:max-w-[1280px] mx-auto px-6;
+}
+
+h1 {
+  @apply font-headings text-text leading-none mb-10;
+  font-size: clamp(22px, calc(3rem + 2vw), 78px);
+
+  &.blog-heading {
+    font-size: clamp(22px, calc(2rem + 2vw), 62px);
+  }
+}
+
+.post-content {
+  font-size: clamp(16px, calc(0.7rem + 1vw), 20px);
+  @apply leading-[1.8] xl:leading-[1.8] text-text-muted;
+
+  * {
+    @apply my-6 first:mt-0 last:mb-0 empty:my-0;
+  }
+
+  h2 {
+    font-size: clamp(22px, calc(1rem + 1.5vw), 40px);
+    text-wrap: balance;
+
+    @apply font-headings scroll-mt-12 text-text mt-16 leading-[1.2] xl:text-[2.2rem] font-semibold max-w-[40ch] first:mt-0 last:mb-0;
+  }
+
+  h3 {
+    font-size: clamp(17px, calc(0.8rem + 1vw), 28px);
+    text-wrap: balance;
+
+    @apply font-headings scroll-mt-12 text-text mt-16 leading-[1.2] xl:text-[1.6rem] font-semibold max-w-[40ch];
+  }
+
+  section {
+    @apply mt-16;
+  }
+
+  a {
+    @apply text-[#8E5CF7] underline underline-offset-4 hover:underline-offset-2;
+  }
+
+  .notion-video {
+    button {
+      @apply m-0 border-8 border-border aspect-[16/9] w-full relative overflow-hidden rounded-xl cursor-pointer after:content-["►"] after:text-7xl after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-white before:absolute before:inset-0 before:bg-black/10;
+    }
+
+    iframe {
+      @apply relative z-10;
+    }
+  }
+
+  .notion-callout {
+    @apply p-6 rounded-lg bg-background-alt;
+
+    p {
+      @apply text-base;
+    }
+
+    h2,
+    h3 {
+      @apply mt-0;
+    }
+  }
+
+  code:not(pre > code) {
+    @apply inline-block bg-background-alt text-[#EA9D34] dark:text-[#F6C177] rounded-lg px-2 py-1 text-base my-0;
+  }
+
+  .shiki {
+    @apply p-4 rounded-lg overflow-auto text-base my-0;
+
+    code {
+      counter-reset: step;
+      counter-increment: step 0;
+
+      .line::before {
+        content: counter(step);
+        counter-increment: step;
+        width: 1rem;
+        margin-right: 1.5rem;
+        display: inline-block;
+        text-align: right;
+        color: rgba(115, 138, 148, 0.4);
+      }
+    }
+  }
+
+  ul,
+  ol {
+    @apply pl-1 my-6 first:mt-0 last:mb-0;
+
+    ul,
+    ol {
+      @apply my-0;
+    }
+  }
+
+  li {
+    @apply relative my-2 pl-8 before:absolute before:left-0;
+  }
+
+  ul li {
+    @apply before:content-["●"] before:top-[0.875em] before:text-xs;
+
+    li {
+      @apply before:content-['○'];
+
+      li {
+        @apply before:content-['■'];
+      }
+    }
+  }
+
+  ol > li {
+    counter-increment: step 1;
+
+    &:before {
+      content: counter(step) ". ";
+    }
+
+    li {
+      counter-reset: step;
+      counter-increment: alphabet 1;
+
+      &:before {
+        content: counter(alphabet, lower-alpha) ". ";
+      }
+
+      li {
+        counter-reset: alphabet;
+        counter-increment: roman 1;
+
+        &:before {
+          content: counter(roman, lower-roman) ". ";
+        }
+      }
+    }
+  }
+
+  .notion-image {
+    img {
+      @apply w-full rounded-xl border-8 border-border;
+    }
+  }
+
+  .notion-caption {
+    @apply text-center px-6 text-text-muted text-xs py-2 -mt-2 font-medium bg-border rounded-b-xl;
+  }
+
+  blockquote {
+    @apply relative my-6 p-6 bg-background-alt border-l-8 border-[#8E5CF7] text-text-muted;
+  }
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }

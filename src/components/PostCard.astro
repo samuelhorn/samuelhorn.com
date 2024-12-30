@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+import { fileToUrl } from "notion-astro-loader";
+import Tag from "./Tag.astro";
+
+const { post } = Astro.props;
+---
+
+<article>
+  <div class="block relative">
+    <span class="block absolute top-3 right-3 z-10">
+      {post.data.properties.tags.map((tag: string) => <Tag tag={tag} />)}
+    </span>
+    {
+      post.data.cover && (
+        <Image
+          inferSize
+          src={fileToUrl(post.data.cover)}
+          alt=""
+          widths={[200, 400, 600, 1000, 1400]}
+          sizes="100vw"
+          class="rounded-2xl aspect-[2/1] object-cover border-8 border-border"
+        />
+      )
+    }
+    <h2 class="text-2xl font-headings text-text mt-3 px-2">
+      <a
+        class="after:absolute after:inset-0"
+        href={`/posts/${post.data.properties.slug}/`}
+      >
+        {post.data.properties.Name}
+      </a>
+    </h2>
+  </div>
+</article>

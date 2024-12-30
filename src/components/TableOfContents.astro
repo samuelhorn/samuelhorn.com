@@ -1,0 +1,34 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+---
+
+<aside id="toc" class="min-w-[180px] max-w-[260px]">
+  <div class="sticky top-10 pt-2">
+    <h2 class="font-headings text-xl">Table of Contents</h2>
+    <ol class="mt-4">
+      {
+        headings.map((heading) => {
+          return (
+            <li
+              class:list={[
+                "mt-2 font-medium border-border",
+                { "text-base border-t pt-2": heading.depth === 0 },
+                { "ml-4 text-sm": heading.depth === 1 },
+              ]}
+            >
+              <a class="opacity-50" href={`#${heading.slug}`}>
+                {heading.text}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</aside>

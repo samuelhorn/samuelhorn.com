@@ -1,0 +1,82 @@
+---
+import "@fontsource/plus-jakarta-sans/400.css";
+import "@fontsource/plus-jakarta-sans/500.css";
+import "@fontsource/plus-jakarta-sans/700.css";
+import "@fontsource/space-grotesk/700.css";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import Footer from "../components/Footer.astro";
+const { title, description } = Astro.props;
+
+const pageTransition = {
+  old: {
+    name: "pageTransition",
+    duration: "0.15s",
+    easing: "ease-in",
+    direction: "reverse",
+  },
+  new: {
+    name: "pageTransition",
+    duration: "0.35s",
+    easing: "ease-out",
+  },
+};
+
+const customTransition = {
+  forwards: pageTransition,
+  backwards: pageTransition,
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={title ?? SITE_TITLE}
+      description={description ?? SITE_DESCRIPTION}
+    />
+  </head>
+  <body class="bg-background text-text">
+    <div class="relative z-10">
+      <Header />
+      <div transition:animate={customTransition}>
+        <slot />
+        <Footer />
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-7 rotate-45 h-[200vh] -mt-[50vh] fixed inset-0 opacity-5 dark:opacity-[0.025] pointer-events-none"
+    >
+      <div
+        class="border-x border-text bg-gradient-to-t from-text via-transparent to-transparent"
+      >
+      </div>
+      <div class="border-x border-text"></div>
+      <div
+        class="border-x border-text bg-gradient-to-b from-text via-transparent to-transparent"
+      >
+      </div>
+      <div class="border-x border-text"></div>
+      <div
+        class="border-x border-text bg-gradient-to-t from-text via-transparent to-transparent"
+      >
+      </div>
+      <div class="border-x border-text"></div>
+      <div class="border-x border-text"></div>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  @keyframes pageTransition {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
