@@ -25,12 +25,6 @@
       cloneAndReplace(oldMenuButton);
     }
 
-    const isHome = window.location.pathname === "/";
-
-    if (isHome) {
-      document.querySelector("#navigation").classList.add("hidden");
-    }
-
     const menuButton = document.getElementById("menuButton");
     menuButton && menuButton.addEventListener("click", toggleMobileNav);
   }
