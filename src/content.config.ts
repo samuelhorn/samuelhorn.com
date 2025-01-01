@@ -1,42 +1,19 @@
 import { defineCollection, z } from "astro:content";
-import { notionLoader } from "notion-astro-loader";
-import {
-  notionPageSchema,
-  propertySchema,
-  transformedPropertySchema,
-} from "notion-astro-loader/schemas";
-import rehypeShiki from "@shikijs/rehype";
-import sectionize from "@hbsnow/rehype-sectionize";
+import { glob } from "astro/loaders";
 
 const blog = defineCollection({
-  loader: notionLoader({
-    auth: import.meta.env.NOTION_TOKEN,
-    database_id: "168a5072f11480f093f4ef00f00edf2f",
-    filter: {
-      property: "published",
-      checkbox: { equals: true },
-    },
-    rehypePlugins: [
-      sectionize as unknown as [string, any],
-      [
-        rehypeShiki,
-        {
-          themes: {
-            dark: "rose-pine-moon",
-            light: "rose-pine-dawn",
-          },
-        },
-      ],
-    ],
-  }),
-  schema: notionPageSchema({
-    properties: z.object({
-      Name: transformedPropertySchema.title,
-      created: propertySchema.created_time.optional(),
-      tags: transformedPropertySchema.multi_select,
-      slug: transformedPropertySchema.rich_text,
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/posts" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      date: z.date(),
+      tags: z.array(z.string()),
+      cover: image(),
+      // Reference a single author from the `authors` collection by `id`
+      // author: reference('authors'),
+      // Reference an array of related posts from the `blog` collection by `slug`
+      // relatedPosts: z.array(reference('blog')),
     }),
-  }),
 });
 
 export const collections = { blog };

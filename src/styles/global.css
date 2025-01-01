@@ -57,7 +57,7 @@ h1 {
     @apply font-headings scroll-mt-12 text-text mt-16 leading-[1.2] xl:text-[1.6rem] font-semibold max-w-[40ch];
   }
 
-  section {
+  section:not(.astro-code-wrapper) {
     @apply mt-16;
   }
 
@@ -65,31 +65,52 @@ h1 {
     @apply text-[#8E5CF7] underline underline-offset-4 hover:underline-offset-2;
   }
 
-  .notion-video {
-    button {
-      @apply m-0 border-8 border-border aspect-[16/9] w-full relative overflow-hidden rounded-xl cursor-pointer after:content-["►"] after:text-7xl after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-white before:absolute before:inset-0 before:bg-black/10;
-    }
-  }
-
-  .notion-callout {
-    @apply p-6 rounded-lg bg-background-alt;
-
-    .notion-callout-content {
-      @apply mt-0;
-    }
-
-    h2,
-    h3 {
-      @apply mt-0;
-    }
-  }
-
   code:not(pre > code) {
     @apply inline-block bg-background-alt text-[#EA9D34] dark:text-[#F6C177] rounded-lg px-2 py-1 text-base my-0;
   }
 
-  .shiki {
-    @apply p-4 rounded-lg overflow-auto text-base my-0;
+  .astro-code-wrapper {
+    @apply relative;
+
+    .astro-code-header {
+      @apply relative rounded-t-lg p-2 my-0 border-b border-border text-xs text-center bg-background-alt text-text-muted;
+
+      .astro-code-header-dots {
+        @apply absolute top-2 left-2 bottom-2 flex gap-1 items-center justify-center my-0;
+      }
+
+      > span {
+        @apply max-w-[60%] my-0 mx-auto overflow-hidden whitespace-nowrap w-full block text-ellipsis;
+      }
+    }
+
+    .astro-code {
+      @apply p-4 rounded-lg overflow-auto text-base my-0 relative;
+    }
+
+    .astro-code-header + .astro-code {
+      @apply rounded-t-none;
+    }
+
+    .astro-code-button {
+      @apply font-headings m-0 absolute z-10 top-1 right-1 border border-border h-6 rounded-md text-xs px-2 leading-none;
+
+      span {
+        @apply m-0;
+      }
+
+      .done {
+        @apply hidden;
+      }
+
+      &.copied .done {
+        @apply block;
+      }
+
+      &.copied .copy {
+        @apply hidden;
+      }
+    }
 
     code {
       counter-reset: step;
@@ -159,13 +180,11 @@ h1 {
     }
   }
 
-  .notion-image {
-    img {
-      @apply w-full rounded-xl border-8 border-border;
-    }
+  img {
+    @apply w-full rounded-xl border-8 border-border;
   }
 
-  .notion-caption {
+  figcaption {
     @apply text-center px-6 text-text-muted text-xs py-2 -mt-2 font-medium bg-border rounded-b-xl;
   }
 
@@ -174,8 +193,8 @@ h1 {
   }
 }
 
-html.dark .shiki,
-html.dark .shiki span {
+html.dark .astro-code,
+html.dark .astro-code span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
   font-style: var(--shiki-dark-font-style) !important;

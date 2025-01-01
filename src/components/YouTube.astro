@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  id: string;
+  caption: string;
+}
+
+const { id, caption } = Astro.props;
+---
+
+<div class="youtube-video" data-video-id={`video-${id}`}>
+  <div
+    class="my-0 border-8 border-border aspect-[16/9] w-full relative overflow-hidden rounded-xl"
+  >
+    <button
+      class="my-0 cursor-pointer after:content-['►'] after:text-7xl after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-white before:absolute before:inset-0 before:bg-black/10"
+    >
+      <Image
+        src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`}
+        alt=""
+        width="1920"
+        height="1080"
+        class="border-none rounded-none"
+      />
+    </button>
+    <div class="video-content"></div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ id: id }}>
+  const videoInit = () => {
+    const container = document.querySelector(`[data-video-id="video-${id}"]`);
+    const button = container.querySelector("button");
+
+    button.addEventListener("click", function () {
+      const iframe = document.createElement("iframe");
+      iframe.setAttribute(
+        "src",
+        `https://www.youtube.com/embed/${id}?autoplay=1`
+      );
+      iframe.setAttribute("frameborder", "0");
+      iframe.setAttribute(
+        "allow",
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      );
+      iframe.setAttribute("allowfullscreen", "true");
+      iframe.setAttribute("class", "aspect-[16/9] w-full relative");
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+
+      // Clear the container and append the iframe
+      button.remove();
+      container.querySelector(".video-content").appendChild(iframe);
+    });
+  };
+
+  videoInit();
+</script>

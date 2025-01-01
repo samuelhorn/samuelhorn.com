@@ -1,0 +1,18 @@
+---
+interface Props {
+  style?: "primary" | "secondary";
+}
+const { style = "primary" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "p-6 rounded-lg",
+    {
+      "bg-background-alt": style === "primary",
+      "border-2 border-border": style === "secondary",
+    },
+  ]}
+>
+  <slot />
+</div>

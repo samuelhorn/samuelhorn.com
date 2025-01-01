@@ -5,38 +5,40 @@ import { Image } from "astro:assets";
 import { fileToUrl } from "notion-astro-loader";
 import Tag from "../../components/Tag.astro";
 import TableOfContents from "../../components/TableOfContents.astro";
+import Callout from "../../components/Callout.astro";
+import YouTube from "../../components/YouTube.astro";
 
 export async function getStaticPaths() {
-  const pages = await getCollection("blog");
+  const posts = await getCollection("blog");
 
-  return pages.map((page) => {
+  return posts.map((post) => {
     return {
       params: {
-        slug: page.data.properties.slug,
+        id: post.id,
       },
       props: {
-        page,
+        post,
       },
     };
   });
 }
 
 export type Props = Awaited<ReturnType<typeof getStaticPaths>>[number]["props"];
-const { page } = Astro.props;
-const { Content, headings } = await render(page);
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
 ---
 
 <Layout>
   <main class="container">
     <article>
       {
-        page.data.cover && (
+        post.data.cover && (
           <Image
-            inferSize
-            src={fileToUrl(page.data.cover)}
+            src={post.data.cover}
             alt=""
-            widths={[200, 400, 600, 1000, 1400]}
-            sizes="100vw"
+            widths={[400, 600, 1000, 1600]}
+            sizes="100vw, (min-width: 768px) 1000px"
             class="rounded-2xl aspect-[16/9] w-full max-w-[1008px] mx-auto object-cover mb-8 lg:mb-14 border-8 border-border"
           />
         )
@@ -46,17 +48,15 @@ const { Content, headings } = await render(page);
       >
         <div class="max-w-[700px] w-full order-2 lg:order-1">
           <h1 class="blog-heading mb-8">
-            {page.data.properties.Name}
+            {post.data.title}
           </h1>
           <div class="flex items-center gap-2 my-8">
             <span class="text-sm">Posted in</span>
-            {page.data.properties.tags.map((tag) => <Tag tag={tag} />)}
+            {post.data.tags.map((tag) => <Tag tag={tag} />)}
             <span class="text-sm">on</span>
             <span class="text-sm font-bold">
               {
-                new Date(
-                  page.data.properties.created?.created_time!
-                ).toLocaleDateString("en-US", {
+                new Date(post.data.date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
@@ -65,7 +65,7 @@ const { Content, headings } = await render(page);
             </span>
           </div>
           <div class="post-content">
-            <Content />
+            <Content components={{ Callout, YouTube }} />
           </div>
         </div>
         <TableOfContents headings={headings} />
@@ -75,40 +75,42 @@ const { Content, headings } = await render(page);
 </Layout>
 
 <script is:inline>
-  const videoInit = () => {
-    const youtubeContainers = document.querySelectorAll(".notion-video");
+  // const videoInit = () => {
+  //   const youtubeContainers = document.querySelectorAll(".youtube-video");
 
-    youtubeContainers.forEach((container) => {
-      container.addEventListener("click", function () {
-        const videoId = container
-          .querySelector("button")
-          .getAttribute("data-video-id");
-        if (!videoId) return;
+  //   youtubeContainers.forEach((container) => {
+  //     const button = container.querySelector("button");
+  //     const videoDiv = container.querySelector(".video-content");
 
-        const iframe = document.createElement("iframe");
-        iframe.setAttribute(
-          "src",
-          `https://www.youtube.com/embed/${videoId}?autoplay=1`
-        );
-        iframe.setAttribute("frameborder", "0");
-        iframe.setAttribute(
-          "allow",
-          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        );
-        iframe.setAttribute("allowfullscreen", "true");
-        iframe.setAttribute(
-          "class",
-          "border-8 border-border aspect-[16/9] w-full relative overflow-hidden rounded-xl"
-        );
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
+  //     button.addEventListener("click", function () {
+  //       const videoId = container.getAttribute("data-video-id");
 
-        // Clear the container and append the iframe
-        container.innerHTML = "";
-        container.appendChild(iframe);
-      });
-    });
-  };
+  //       if (!videoId) return;
+
+  //       const iframe = document.createElement("iframe");
+  //       iframe.setAttribute(
+  //         "src",
+  //         `https://www.youtube.com/embed/${videoId}?autoplay=1`
+  //       );
+  //       iframe.setAttribute("frameborder", "0");
+  //       iframe.setAttribute(
+  //         "allow",
+  //         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  //       );
+  //       iframe.setAttribute("allowfullscreen", "true");
+  //       iframe.setAttribute(
+  //         "class",
+  //         "border-8 border-border aspect-[16/9] w-full relative overflow-hidden rounded-xl"
+  //       );
+  //       iframe.style.width = "100%";
+  //       iframe.style.height = "100%";
+
+  //       // Clear the container and append the iframe
+  //       button.innerHTML = "";
+  //       videoDiv.appendChild(iframe);
+  //     });
+  //   });
+  // };
 
   const tocIntersectionObserver = () => {
     const observer = new IntersectionObserver((sections) => {
@@ -134,7 +136,7 @@ const { Content, headings } = await render(page);
   };
 
   const initializeScripts = () => {
-    videoInit();
+    // videoInit();
     tocIntersectionObserver();
   };
 

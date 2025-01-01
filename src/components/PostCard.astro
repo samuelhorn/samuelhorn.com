@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import { fileToUrl } from "notion-astro-loader";
 
 const { post } = Astro.props;
 ---
@@ -10,7 +9,7 @@ const { post } = Astro.props;
     post.data.cover && (
       <Image
         inferSize
-        src={fileToUrl(post.data.cover)}
+        src={post.data.cover}
         alt=""
         widths={[200, 400, 600, 1000, 1400]}
         sizes="100vw"
@@ -20,10 +19,8 @@ const { post } = Astro.props;
   }
   <div class="mt-4">
     <h2 class="text-2xl font-headings text-text mt-3 px-2">
-      <a
-        class="after:absolute after:inset-0"
-        href={`/posts/${post.data.properties.slug}/`}
-        >{post.data.properties.Name}
+      <a class="after:absolute after:inset-0" href={`/posts/${post.id}/`}>
+        {post.data.title}
       </a>
     </h2>
     <!-- <span class="inline-block -translate-y-0.5">

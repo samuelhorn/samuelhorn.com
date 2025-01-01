@@ -6,8 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "postinstall": "patch-package"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.2",
@@ -20,20 +19,16 @@
     "@hbsnow/rehype-sectionize": "^1.0.7",
     "@shikijs/rehype": "^1.24.4",
     "astro": "^5.1.0",
-    "astro-navbar": "^2.3.9",
+    "astro-icon": "^1.1.5",
     "module-alias": "^2.2.3",
     "motion": "^11.15.0",
-    "notion-astro-loader": "^0.4.0",
-    "notion-rehype-k": "^1.1.6",
-    "patch-package": "^8.0.0",
     "rehype-shift-heading": "^2.0.0",
+    "remark-captions": "^2.2.4",
     "shiki": "^0.11.1",
-    "svelte": "^5.16.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
-    "@shikijs/transformers": "^1.24.3",
     "@tailwindcss/typography": "^0.5.15"
   }
 }

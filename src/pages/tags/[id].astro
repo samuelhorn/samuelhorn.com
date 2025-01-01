@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 
   const extractedTags = posts
     .map((post) => {
-      return post.data.properties.tags;
+      return post.data.tags;
     })
     .flat();
 
@@ -27,12 +27,12 @@ export async function getStaticPaths() {
 
   return uniqueTags.map((tag) => {
     const taggedPosts = posts.filter((post) => {
-      return post.data.properties.tags.includes(tag);
+      return post.data.tags.includes(tag);
     });
 
     return {
       params: {
-        slug: slugify(tag),
+        id: slugify(tag),
       },
       props: {
         tag,

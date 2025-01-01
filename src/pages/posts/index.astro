@@ -4,20 +4,6 @@ import Layout from "../../layouts/BaseLayout.astro";
 import PostCard from "../../components/PostCard.astro";
 
 const posts = await getCollection("blog");
-
-posts.sort((a, b) => {
-  if (
-    !a.data.properties.created?.created_time ||
-    !b.data.properties.created?.created_time
-  ) {
-    return 0;
-  }
-
-  return (
-    new Date(b.data.properties.created.created_time).getTime() -
-    new Date(a.data.properties.created.created_time).getTime()
-  );
-});
 ---
 
 <Layout>
