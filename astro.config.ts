@@ -6,12 +6,10 @@ import tailwind from "@astrojs/tailwind";
 import sectionize from "@hbsnow/rehype-sectionize";
 import { codeTransformer } from "./src/lib/codetransformer";
 
-import icon from "astro-icon";
-
 // https://astro.build/config
 export default defineConfig({
   site: "https://samuelhorn.com",
-  integrations: [mdx(), sitemap(), tailwind(), icon()],
+  integrations: [mdx(), sitemap(), tailwind()],
   markdown: {
     rehypePlugins: [sectionize as unknown as [string, any]],
     syntaxHighlight: "shiki",

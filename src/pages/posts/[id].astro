@@ -2,7 +2,6 @@
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
-import { fileToUrl } from "notion-astro-loader";
 import Tag from "../../components/Tag.astro";
 import TableOfContents from "../../components/TableOfContents.astro";
 import Callout from "../../components/Callout.astro";
@@ -29,7 +28,11 @@ const { post } = Astro.props;
 const { Content, headings } = await render(post);
 ---
 
-<Layout>
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  image=`/og/${post.id}.png`
+>
   <main class="container">
     <article>
       {

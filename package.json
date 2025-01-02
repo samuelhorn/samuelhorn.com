@@ -20,6 +20,7 @@
     "@shikijs/rehype": "^1.24.4",
     "astro": "^5.1.0",
     "astro-icon": "^1.1.5",
+    "astro-og-canvas": "^0.5.5",
     "module-alias": "^2.2.3",
     "motion": "^11.15.0",
     "rehype-shift-heading": "^2.0.0",
